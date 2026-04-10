@@ -1,0 +1,8 @@
+{
+  "name": "ai-poetry-snake",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check script.js"
+  }
+}

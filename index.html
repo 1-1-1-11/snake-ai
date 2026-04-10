@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 诗歌贪吃蛇</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero reveal">
+      <p class="eyebrow">AI Co-Creation Snake</p>
+      <div class="hero-row">
+        <div>
+          <h1>AI 诗歌贪吃蛇</h1>
+          <p class="hero-copy">棋盘负责节奏，AI 负责落笔和作画。每吃下一个词，都会异步长出一句诗和一张图。</p>
+        </div>
+        <div class="hero-pills">
+          <span class="status-pill" id="aiStatus">正在检查 AI</span>
+          <span class="status-pill" id="themeLabel">童话</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="control-bar reveal" aria-label="主题和开场灵感">
+      <div class="theme-strip">
+        <button class="theme-chip is-active" type="button" data-theme="fairytale">童话</button>
+        <button class="theme-chip" type="button" data-theme="scifi">科幻</button>
+        <button class="theme-chip" type="button" data-theme="tang">唐诗</button>
+      </div>
+
+      <label class="seed-box">
+        <span>开场灵感</span>
+        <input id="seedInput" type="text" maxlength="40" placeholder="例如：一场迟到的月光">
+      </label>
+    </section>
+
+    <section class="stage">
+      <section class="board-panel reveal">
+        <div class="status-row" aria-label="游戏状态">
+          <div class="status-card">
+            <span class="label">分数</span>
+            <strong id="score">0</strong>
+          </div>
+          <div class="status-card">
+            <span class="label">状态</span>
+            <strong id="statusText">准备中</strong>
+          </div>
+          <div class="status-card">
+            <span class="label">情绪</span>
+            <strong id="moodText">晨林</strong>
+          </div>
+        </div>
+
+        <div class="board-shell" id="boardShell">
+          <canvas
+            id="gameCanvas"
+            width="512"
+            height="512"
+            role="img"
+            aria-label="AI 诗歌贪吃蛇棋盘"
+          ></canvas>
+          <div class="board-overlay" id="overlay">
+            <div class="overlay-card">
+              <p class="overlay-tag" id="overlayTag">准备开始</p>
+              <h2 id="overlayTitle">AI 正在为第一局热身</h2>
+              <p id="overlayText">点击开始，或者按一次方向键。真正的 AI 会在你吃到单词后异步生成诗句和图片。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="word-hud">
+          <div class="word-chip" id="targetWord">词</div>
+          <p id="liveLine">先吃掉一个词，AI 才会开始说话。</p>
+        </div>
+
+        <div class="actions">
+          <button id="startButton" class="button button-primary" type="button">开始创作</button>
+          <button id="restartButton" class="button button-secondary" type="button">重新开始</button>
+          <button id="copyButton" class="button button-secondary" type="button">复制诗歌</button>
+          <button id="saveButton" class="button button-secondary" type="button">保存海报</button>
+        </div>
+
+        <div class="touch-controls" aria-label="触控方向键">
+          <button class="touch-button touch-up" type="button" data-control-key="ArrowUp" aria-label="向上">^</button>
+          <button class="touch-button touch-left" type="button" data-control-key="ArrowLeft" aria-label="向左">&lt;</button>
+          <button class="touch-button touch-right" type="button" data-control-key="ArrowRight" aria-label="向右">&gt;</button>
+          <button class="touch-button touch-down" type="button" data-control-key="ArrowDown" aria-label="向下">v</button>
+        </div>
+      </section>
+
+      <aside class="insight-panel reveal">
+        <article class="current-card" id="currentCard" data-state="empty">
+          <div class="current-head">
+            <span class="mini-label">当前 AI 创作</span>
+            <span class="mini-meta" id="fragmentMeta">等待第一个词</span>
+          </div>
+
+          <div class="current-body">
+            <div class="art-frame" id="artFrame">
+              <img id="currentImage" alt="AI 生成插图" hidden>
+              <div class="art-placeholder" id="currentArtPlaceholder">
+                <span id="placeholderWord">词</span>
+              </div>
+            </div>
+
+            <div class="current-copy">
+              <h2 id="fragmentWord">还没落笔</h2>
+              <p id="fragmentLine">当前界面只保留一张最新作品卡，保证你打游戏时视线不会被旁边的内容拉走。</p>
+            </div>
+          </div>
+        </article>
+
+        <details class="archive">
+          <summary>查看长卷</summary>
+          <ul id="poemList" class="poem-list">
+            <li class="placeholder">本局的诗句会按时间顺序收在这里。</li>
+          </ul>
+        </details>
+
+        <details class="archive">
+          <summary>查看图册</summary>
+          <div id="galleryGrid" class="gallery-grid">
+            <div class="gallery-empty">AI 生成的图像会逐步出现在这里。</div>
+          </div>
+        </details>
+      </aside>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
