@@ -10,33 +10,65 @@
   <main class="app">
     <header class="hero reveal">
       <p class="eyebrow">AI Co-Creation Snake</p>
+
       <div class="hero-row">
-        <div>
+        <section class="hero-copy-block">
           <h1>AI 诗歌贪吃蛇</h1>
-          <p class="hero-copy">棋盘负责节奏，AI 负责落笔和作画。每吃下一个词，都会异步长出一句诗和一张图。</p>
-        </div>
-        <div class="hero-pills">
-          <span class="status-pill" id="aiStatus">正在检查 AI</span>
-          <span class="status-pill" id="themeLabel">童话</span>
-        </div>
+          <p class="hero-copy">把街机节奏、中文短诗和即时配图缝在同一张页面里。你负责转向和吞词，系统负责把每一次碰撞翻译成正在生长的句子。</p>
+
+          <div class="hero-tags" aria-label="项目特征">
+            <span>实时生成</span>
+            <span>长卷叙事</span>
+            <span>图像回声</span>
+          </div>
+        </section>
+
+        <aside class="hero-side" aria-label="当前模式概览">
+          <div class="status-pill" id="aiStatus">正在检查 AI</div>
+          <div class="status-pill" id="themeLabel">童话</div>
+
+          <section class="hero-note">
+            <span class="hero-note-label">本局气质</span>
+            <p>更像一本正在被你边玩边写出来的诗歌样刊，而不是传统分栏后台。</p>
+          </section>
+        </aside>
       </div>
     </header>
 
-    <section class="control-bar reveal" aria-label="主题和开场灵感">
-      <div class="theme-strip">
-        <button class="theme-chip is-active" type="button" data-theme="fairytale">童话</button>
-        <button class="theme-chip" type="button" data-theme="scifi">科幻</button>
-        <button class="theme-chip" type="button" data-theme="tang">唐诗</button>
+    <section class="control-bar reveal" aria-label="主题与开场灵感">
+      <div class="control-cluster">
+        <div class="control-heading">
+          <span class="control-label">场景切换</span>
+          <p>不同主题会改写词库、默认情绪和整页色彩。</p>
+        </div>
+
+        <div class="theme-strip">
+          <button class="theme-chip is-active" type="button" data-theme="fairytale">童话</button>
+          <button class="theme-chip" type="button" data-theme="scifi">科幻</button>
+          <button class="theme-chip" type="button" data-theme="tang">唐诗</button>
+        </div>
       </div>
 
-      <label class="seed-box">
-        <span>开场灵感</span>
-        <input id="seedInput" type="text" maxlength="40" placeholder="例如：一场迟到的月光">
-      </label>
+      <div class="control-cluster control-cluster-seed">
+        <label class="seed-box">
+          <span>开场灵感</span>
+          <input id="seedInput" type="text" maxlength="40" placeholder="例如：一场迟到的月光">
+        </label>
+
+        <p class="control-tip">方向键开始，或直接点“开始创作”。刷新后只恢复完整片段。</p>
+      </div>
     </section>
 
     <section class="stage">
       <section class="board-panel reveal">
+        <div class="panel-header">
+          <div>
+            <span class="panel-kicker">Playfield</span>
+            <h2>游戏棋盘</h2>
+          </div>
+          <p>词语不是奖励，它们是正在等你采样的意象节点。</p>
+        </div>
+
         <div class="status-row" aria-label="游戏状态">
           <div class="status-card">
             <span class="label">分数</span>
@@ -82,17 +114,20 @@
         </div>
 
         <div class="touch-controls" aria-label="触控方向键">
-          <button class="touch-button touch-up" type="button" data-control-key="ArrowUp" aria-label="向上">^</button>
-          <button class="touch-button touch-left" type="button" data-control-key="ArrowLeft" aria-label="向左">&lt;</button>
-          <button class="touch-button touch-right" type="button" data-control-key="ArrowRight" aria-label="向右">&gt;</button>
-          <button class="touch-button touch-down" type="button" data-control-key="ArrowDown" aria-label="向下">v</button>
+          <button class="touch-button touch-up" type="button" data-control-key="ArrowUp" aria-label="向上">↑</button>
+          <button class="touch-button touch-left" type="button" data-control-key="ArrowLeft" aria-label="向左">←</button>
+          <button class="touch-button touch-right" type="button" data-control-key="ArrowRight" aria-label="向右">→</button>
+          <button class="touch-button touch-down" type="button" data-control-key="ArrowDown" aria-label="向下">↓</button>
         </div>
       </section>
 
       <aside class="insight-panel reveal">
         <article class="current-card" id="currentCard" data-state="empty">
-          <div class="current-head">
-            <span class="mini-label">当前 AI 创作</span>
+          <div class="panel-header panel-header-tight">
+            <div>
+              <span class="panel-kicker">Live Draft</span>
+              <h2>当前 AI 创作</h2>
+            </div>
             <span class="mini-meta" id="fragmentMeta">等待第一个词</span>
           </div>
 
@@ -105,13 +140,13 @@
             </div>
 
             <div class="current-copy">
-              <h2 id="fragmentWord">还没落笔</h2>
-              <p id="fragmentLine">当前界面只保留一张最新作品卡，保证你打游戏时视线不会被旁边的内容拉走。</p>
+              <h3 id="fragmentWord">还没落笔</h3>
+              <p id="fragmentLine">这里只保留一张最新作品卡，让你在游戏进行时仍然能抓住当前这一次生成的情绪重心。</p>
             </div>
           </div>
         </article>
 
-        <details class="archive">
+        <details class="archive" open>
           <summary>查看长卷</summary>
           <ul id="poemList" class="poem-list">
             <li class="placeholder">本局的诗句会按时间顺序收在这里。</li>
@@ -128,6 +163,6 @@
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script type="module" src="app.mjs"></script>
 </body>
 </html>
